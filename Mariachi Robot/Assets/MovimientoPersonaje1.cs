@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class MovimientoPersonaje1 : MonoBehaviour
 {
-    
+    public float fuerza;
+    private Rigidbody cuerpo;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
+        cuerpo = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        
+        float deltaX = Input.GetAxis("Horizontal")*fuerza;
+
+        cuerpo.AddForce(new Vector3(deltaX * Time.fixedDeltaTime, 0));
     }
 }
