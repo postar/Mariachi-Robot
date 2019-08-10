@@ -9,7 +9,13 @@ public class Movimientos : MonoBehaviour
     bool enElSuelo = true;
     bool derecha= true;
     bool izquierda = true;
+    bool botonEcopeto = false;
+    bool botonPistola = false;
+    bool botonDash = false;
+    bool up = false;
     int direcion = 0;
+    float xaxis = 0;
+    float yaxis = 0;
     //Vector3 velocidadAnterior = new Vector3(0, 0, 0);
     //Vector3 fuerzaAnterior = new Vector3(0,0,0);
 
@@ -37,15 +43,15 @@ public class Movimientos : MonoBehaviour
     [SerializeField]
     int ImpulsoEscopeta = 40;
     [SerializeField]
-    int TimerEscoperta = 100;
+    int TimerEscoperta = 20;
     [SerializeField]
     int RecargaEscopeta = 0;
     [SerializeField]
-    int TimerSprite = 100;
+    int TimerSprite = 20;
     [SerializeField]
     int RecargaSprite = 0;
     [SerializeField]
-    int TimerPistolas = 100;
+    int TimerPistolas = 20;
     [SerializeField]
     int RecargaPistolas = 0;
     [SerializeField]
@@ -59,9 +65,25 @@ public class Movimientos : MonoBehaviour
 
     private void FixedUpdate()
     {
+
+        ObtenerImpust();
+        Movimiento();
+        AplicarRozamiento();
+        Salto();
+        //Dash();
+        RecargaDeArmas();
+        DisparoARmas();
+    }
+
+    private void ObtenerImpust()
+    {
+        up = Input.GetButtonUp("Jump") || Input.GetKey("space");
+        botonDash = Input.GetKey("w");
+        botonEcopeto = Input.GetKey("q");
+        botonPistola = Input.GetKey("e");
         rb.mass = Maza;
-        float xaxis = Input.GetAxis("Horizontal");
-        float yaxis = Input.GetAxis("Vertical");
+        xaxis = Input.GetAxis("Horizontal");
+        yaxis = Input.GetAxis("Vertical");
         if (xaxis > 0)
             direcion = 1;
         if (xaxis < 0)
@@ -69,8 +91,10 @@ public class Movimientos : MonoBehaviour
         enElSuelo = Physics.Linecast(transform.position, checkSuelo.position, LayerMask.NameToLayer("piso"));
         derecha = Physics.Linecast(transform.position, checkDerecha.position, LayerMask.NameToLayer("piso"));
         izquierda = Physics.Linecast(transform.position, checkIzquierda.position, LayerMask.NameToLayer("piso"));
+    }
 
-        //Movimiento
+    private void Movimiento()
+    {
         if (xaxis != 0 && enElSuelo)
         {
             if (!CorrerConAceleracion)
@@ -85,9 +109,11 @@ public class Movimientos : MonoBehaviour
                 rb.AddForce(vector);
             }
         }
+    }
 
-        //Friccion
-        if ( enElSuelo)
+    private void AplicarRozamiento()
+    {
+        if (enElSuelo)
         {
             if (!CorrerConAceleracion)
             {
@@ -100,9 +126,10 @@ public class Movimientos : MonoBehaviour
                 rb.AddForce(vector);
             }
         }
+    }
 
-        //Salto
-        bool up = Input.GetButtonUp("Jump") || Input.GetKey("space");
+    private void Salto()
+    {
         if (up && enElSuelo)
         {
             var vector = new Vector3(0, FuerzaDeSalto, 0);
@@ -118,48 +145,52 @@ public class Movimientos : MonoBehaviour
             var vector = new Vector3(FuerzaDeSalto, FuerzaDeSalto, 0);
             rb.AddForce(vector);
         }
+    }
 
-        //Disparo escopeta
-        if (enElSuelo && Input.GetKey("w")){
-            var vector = new Vector3(direcion * (ImpulsoDeSprite/rb.mass), 0, 0);
-            //rb.AddForce(vector);
+    private void Dash()
+    {
+        if (enElSuelo && botonDash)
+        {
+            var vector = new Vector3(direcion * (ImpulsoDeSprite / rb.mass), 0, 0);
             rb.velocity = vector;
         }
+    }
 
-
-        //armas
-        //timers
+    private void RecargaDeArmas()
+    {
         if (RecargaEscopeta < TimerEscoperta)
             RecargaEscopeta++;
         if (RecargaSprite < TimerSprite)
             RecargaSprite++;
         if (RecargaPistolas < TimerPistolas)
             RecargaPistolas++;
+    }
 
-        //sprite
-        if (enElSuelo && Input.GetKey("w") && RecargaSprite == TimerSprite)
+    private void DisparoARmas()
+    {
+        if (enElSuelo && botonDash && RecargaSprite == TimerSprite)
         {
             RecargaSprite = 0;
             var vector = new Vector3(direcion * (ImpulsoDeSprite / rb.mass), 0, 0);
             //rb.AddForce(vector);
             rb.velocity = vector;
         }
-        if (Input.GetKey("q") && RecargaEscopeta == TimerEscoperta)
+        if (botonEcopeto && RecargaEscopeta == TimerEscoperta)
         {
             RecargaEscopeta = 0;
-        //    var Auxilair = 0;
-        //    if (xaxis == 0)
-        //        Auxilair == direcion;
+            //    var Auxilair = 0;
+            //    if (xaxis == 0)
+            //        Auxilair == direcion;
             var vector = new Vector3(-xaxis, -yaxis, 0);
             vector = vector * (ImpulsoEscopeta / rb.mass);
             //rb.AddForce(vector);
             rb.velocity = vector;
-            
+
             //var vector2 = vector * -1;
             //var bullet = Instantiate(MunicionEscopeta, rb.position, rb.rotation) as Rigidbody;
             //bullet.AddForce(vector2);
         }
-        if (Input.GetKey("e"))
+        if (botonPistola)
         {
             var vector = new Vector3(0, 0, 0);
             rb.velocity = vector;
