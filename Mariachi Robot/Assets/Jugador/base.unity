@@ -225,6 +225,24 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 156609759}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &180054637 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5914079077678508121, guid: d32603b30d3b64e48b84b9b63cf274dc,
+    type: 3}
+  m_PrefabInstance: {fileID: 5914079078537675618}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &180054638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180054637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73132e212e30dcc41aa86e0537df7786, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &222233909
 GameObject:
   m_ObjectHideFlags: 0
@@ -879,8 +897,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 944568502}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.5336747, y: 0.048126698, z: -9.692926}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -6.5337, y: 0.048126698, z: -78.445}
+  m_LocalScale: {x: 1, y: 1, z: 8.3825}
   m_Children:
   - {fileID: 764714489}
   - {fileID: 222233914}
