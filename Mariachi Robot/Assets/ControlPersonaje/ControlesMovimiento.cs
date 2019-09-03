@@ -15,7 +15,13 @@ public class ControlesMovimiento : MonoBehaviour
     [SerializeField]
     int ModuloVelocidad = 1;
     [SerializeField]
-    int FuerzaDeSalto = 2;
+    int FuerzaDeSalto = 80;
+
+
+    [SerializeField]
+    int TimerSalto = 2;
+    [SerializeField]
+    int RecargaSalto = 0;
 
     void Start()
     {
@@ -27,12 +33,20 @@ public class ControlesMovimiento : MonoBehaviour
     {
         ObtenerImpust();
         Movimiento();
+        RecargaTimSalto();
         Salto();
     }
 
+    private void RecargaTimSalto()
+    {
+        if (RecargaSalto < TimerSalto)
+            RecargaSalto++;
+    }
+
+
     private void ObtenerImpust()
     {
-        up = Input.GetButtonUp("Jump") || Input.GetKey("space");
+        up = Input.GetButtonDown("Jump") || Input.GetKeyDown("space");
         botonDash = Input.GetKey("w");
         botonEcopeto = Input.GetKey("q");
         botonPistola = Input.GetKey("e");
@@ -48,26 +62,29 @@ public class ControlesMovimiento : MonoBehaviour
     {
         if (xaxis != 0 && fisicas.EnElSuelo())
         {
-            fisicas.AgregarVelocidad(new Vector3(ModuloVelocidad * xaxis, 0, 0));
+            fisicas.AgregarPasoEnX(new Vector3(ModuloVelocidad * xaxis, 0, 0), new Vector3(ModuloVelocidad * xaxis, 0, 0));
         }
     }
 
     private void Salto()
     {
-        if (up && fisicas.EnElSuelo())
-        {
-            var vector = new Vector3(0, FuerzaDeSalto, 0);
-            fisicas.AgregarFuerza(vector);
-        }
-        if (up && fisicas.Derecha())
-        {
-            var vector = new Vector3(-FuerzaDeSalto, FuerzaDeSalto, 0);
-            fisicas.AgregarFuerza(vector);
-        }
-        if (up && fisicas.Izquierda())
-        {
-            var vector = new Vector3(FuerzaDeSalto, FuerzaDeSalto, 0);
-            fisicas.AgregarFuerza(vector);
+        if (RecargaSalto == TimerSalto && up) {
+            if (fisicas.EnElSuelo())
+            {
+                var vector = new Vector3(0, FuerzaDeSalto, 0);
+                fisicas.AgregarFuerza(vector);
+            }
+            if (fisicas.Derecha())
+            {
+                var vector = new Vector3(-FuerzaDeSalto, FuerzaDeSalto, 0);
+                fisicas.AgregarFuerza(vector);
+            }
+            if (fisicas.Izquierda())
+            {
+                var vector = new Vector3(FuerzaDeSalto, FuerzaDeSalto, 0);
+                fisicas.AgregarFuerza(vector);
+            }
+            RecargaSalto = 0;
         }
     }
 }

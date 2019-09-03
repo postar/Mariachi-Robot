@@ -77,7 +77,7 @@ public class Movimientos : MonoBehaviour
 
     private void ObtenerImpust()
     {
-        up = Input.GetButtonUp("Jump") || Input.GetKey("space");
+        up = Input.GetButtonDown("Jump") || Input.GetButtonDown("space");
         botonDash = Input.GetKey("w");
         botonEcopeto = Input.GetKey("q");
         botonPistola = Input.GetKey("e");
@@ -130,11 +130,11 @@ public class Movimientos : MonoBehaviour
 
     private void Salto()
     {
-        if (up && enElSuelo)
-        {
-            var vector = new Vector3(0, FuerzaDeSalto, 0);
-            rb.AddForce(vector);
-        }
+        //if (up && enElSuelo && !derecha && !izquierda)
+        //{
+        //    var vector = new Vector3(0, FuerzaDeSalto, 0);
+        //    rb.AddForce(vector);
+        //}
         if (up && derecha)
         {
             var vector = new Vector3(-FuerzaDeSalto, FuerzaDeSalto, 0);
