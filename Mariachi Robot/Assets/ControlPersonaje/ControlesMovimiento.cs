@@ -68,21 +68,23 @@ public class ControlesMovimiento : MonoBehaviour
 
     private void Salto()
     {
-        if (RecargaSalto == TimerSalto && up) {
+        if (up) {
             if (fisicas.EnElSuelo())
             {
                 var vector = new Vector3(0, FuerzaDeSalto, 0);
-                fisicas.AgregarFuerza(vector);
+                fisicas.SetVelocidadY(vector);
             }
             if (fisicas.Derecha())
             {
                 var vector = new Vector3(-FuerzaDeSalto, FuerzaDeSalto, 0);
-                fisicas.AgregarFuerza(vector);
+                fisicas.SetVelocidadX(vector);
+                fisicas.SetVelocidadY(vector);
             }
             if (fisicas.Izquierda())
             {
                 var vector = new Vector3(FuerzaDeSalto, FuerzaDeSalto, 0);
-                fisicas.AgregarFuerza(vector);
+                fisicas.SetVelocidadX(vector);
+                fisicas.SetVelocidadY(vector);
             }
             RecargaSalto = 0;
         }

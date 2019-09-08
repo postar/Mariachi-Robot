@@ -9,6 +9,8 @@ public class FisicasPersonalizado : MonoBehaviour
     bool derecha = true;
     bool izquierda = true;
     int rozamiento = 4;
+    int rozamientoAire = 1;
+
 
     [SerializeField]
     Transform checkSuelo1;
@@ -58,6 +60,20 @@ public class FisicasPersonalizado : MonoBehaviour
             else
                 rb.AddForce(new Vector3(0, -rozamiento, 0));
         }
+        if (rb.velocity.x != 0 && !enElSuelo)
+        {
+            if (rb.velocity.x < 0)
+                rb.AddForce(new Vector3(rozamientoAire, 0, 0));
+            else
+                rb.AddForce(new Vector3(-rozamientoAire, 0, 0));
+        }
+        if (rb.velocity.y != 0 && !(izquierda || derecha))
+        {
+            if (rb.velocity.x < 0)
+                rb.AddForce(new Vector3(0, rozamientoAire, 0));
+            else
+                rb.AddForce(new Vector3(0, -rozamientoAire, 0));
+        }
     }
 
     private void ObtenerColiciones()
@@ -73,6 +89,15 @@ public class FisicasPersonalizado : MonoBehaviour
     {
         rb.velocity = velocidad;
     }
+    public void SetVelocidadX(Vector3 velocidad)
+    {
+        rb.velocity = new Vector3 (velocidad.x, rb.velocity.y);
+    }
+    public void SetVelocidadY(Vector3 velocidad)
+    {
+        rb.velocity = new Vector3(rb.velocity.x, velocidad.y);
+    }
+
     public void AgregarVelocidad(Vector3 velocidad)
     {
         this.velocidad += velocidad;

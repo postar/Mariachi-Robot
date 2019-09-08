@@ -1064,7 +1064,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ModuloVelocidad: 4
-  FuerzaDeSalto: 400
+  FuerzaDeSalto: 10
   TimerSalto: 2
   RecargaSalto: 0
 --- !u!114 &1103402476
@@ -1115,7 +1115,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1312604182}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.323, y: -0.558, z: 0}
+  m_LocalPosition: {x: 0.323, y: -0.65, z: 0}
   m_LocalScale: {x: 0.341, y: 0.325, z: 1}
   m_Children: []
   m_Father: {fileID: 1103402473}
@@ -2016,12 +2016,12 @@ PrefabInstance:
     - target: {fileID: 5914079076600340837, guid: d32603b30d3b64e48b84b9b63cf274dc,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.318
+      value: -0.3
       objectReference: {fileID: 0}
     - target: {fileID: 5914079076600340837, guid: d32603b30d3b64e48b84b9b63cf274dc,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.528
+      value: -0.67
       objectReference: {fileID: 0}
     - target: {fileID: 5914079076912548665, guid: d32603b30d3b64e48b84b9b63cf274dc,
         type: 3}
